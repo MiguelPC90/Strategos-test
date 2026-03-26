@@ -18,6 +18,7 @@
   --r:8px;--rl:12px;
   --blue:#185FA5;--red:#A32D2D;--red-bar:#E24B4A;--amber:#854F0B;
 }
+body.dark{--bg:#1a1a1e;--bg2:#242428;--bg3:#2e2e32;--text:#e8e8e4;--text2:#a0a09a;--text3:#606058;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15)}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg3);color:var(--text);font-size:14px;min-height:100vh;padding-top:0}
 
 /* ── FIXED HEADER ── */
@@ -109,7 +110,7 @@ tr.hover-row:hover td{background:var(--bg2)}
 .gantt-table .g-sticky-pct{position:sticky;left:204px;z-index:2;background:var(--bg);}
 .gantt-table .g-sticky-st{position:sticky;left:250px;z-index:2;background:var(--bg);}
 .gantt-table{border-collapse:collapse;font-size:12px;min-width:800px;width:100%}
-.gantt-table th{background:var(--navy);color:#fff;padding:6px 8px;font-size:10px;font-weight:500;white-space:nowrap;border-right:1px solid rgba(255,255,255,.12)}
+.gantt-table th{background:var(--navy);color:#fff;padding:6px 8px;font-size:10px;font-weight:500;white-space:nowrap;border-right:1px solid rgba(255,255,255,.12);position:sticky;top:0;z-index:3}
 .gantt-table td{padding:4px 8px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap}
 .gantt-table tr:hover td{background:rgba(0,46,94,.04)}
 .gantt-row-n1 td{background:rgba(0,46,94,.07);font-weight:700;color:var(--navy)}
@@ -473,11 +474,11 @@ tr.hover-row:hover td{background:var(--bg2)}
     </div>
     <div class="ms-wrap gantt-date-filter" style="display:none">
       <div class="ms-label">Data início ≥</div>
-      <input type="date" id="f-date-start" onchange="applyFilters()" style="padding:6px 8px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:inherit;width:100%">
+      <input type="date" id="f-date-start" onchange="dApplyFilters()" style="padding:6px 8px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:inherit;width:100%">
     </div>
     <div class="ms-wrap gantt-date-filter" style="display:none">
       <div class="ms-label">Data fim ≤</div>
-      <input type="date" id="f-date-end" onchange="applyFilters()" style="padding:6px 8px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:inherit;width:100%">
+      <input type="date" id="f-date-end" onchange="dApplyFilters()" style="padding:6px 8px;font-size:12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:inherit;width:100%">
     </div>
     <button class="btn" style="align-self:flex-end;font-size:11px;padding:6px 10px" onclick="resetFilters()">&#10005; Limpar</button>
   <div class="ms-wrap" style="max-width:160px">
@@ -571,12 +572,12 @@ tr.hover-row:hover td{background:var(--bg2)}
     </div>
     <div style="overflow-x:auto"><table>
       <thead><tr>
-        <th>Eixo / Plano</th>
-        <th class="c">Total</th><th class="c" style="color:var(--blue)">Conc.</th>
-        <th class="c" style="color:var(--green)">Em dia</th><th class="c" style="color:var(--red)">Atraso</th>
-        <th class="c">Exec.</th><th class="c" style="color:var(--green)">Exec.obj.</th>
-        <th class="c">Conc.geral</th><th class="c" style="color:var(--green)">C.g.obj.</th>
-        <th class="c">Conc.data</th><th class="c" style="color:var(--green)">C.d.obj.</th>
+        <th scope="col">Eixo / Plano</th>
+        <th scope="col" class="c">Total</th><th scope="col" class="c" style="color:var(--blue)">Conc.</th>
+        <th scope="col" class="c" style="color:var(--green)">Em dia</th><th scope="col" class="c" style="color:var(--red)">Atraso</th>
+        <th scope="col" class="c">Exec.</th><th scope="col" class="c" style="color:var(--green)">Exec.obj.</th>
+        <th scope="col" class="c">Conc.geral</th><th scope="col" class="c" style="color:var(--green)">C.g.obj.</th>
+        <th scope="col" class="c">Conc.data</th><th scope="col" class="c" style="color:var(--green)">C.d.obj.</th>
       </tr></thead>
       <tbody id="tbl-eixo"></tbody>
     </table></div>
@@ -592,11 +593,11 @@ tr.hover-row:hover td{background:var(--bg2)}
   <div class="card" style="padding:0;overflow:hidden">
   <div style="overflow-x:auto"><table>
     <thead><tr>
-      <th style="min-width:240px">Designação</th>
-      <th class="c" style="min-width:80px">Estado</th>
-      <th class="c" style="min-width:90px">C / D / A</th>
-      <th class="c" style="min-width:160px">Exec. real / prev.</th>
-      <th class="c" style="white-space:nowrap">Prazo</th>
+      <th scope="col" style="min-width:240px">Designação</th>
+      <th scope="col" class="c" style="min-width:80px">Estado</th>
+      <th scope="col" class="c" style="min-width:90px">C / D / A</th>
+      <th scope="col" class="c" style="min-width:160px">Exec. real / prev.</th>
+      <th scope="col" class="c" style="white-space:nowrap">Prazo</th>
     </tr></thead>
     <tbody id="tbl-act"></tbody>
   </table></div>
@@ -698,7 +699,7 @@ tr.hover-row:hover td{background:var(--bg2)}
 <!-- GESTÃO DE PROJECTOS -->
 <div id="gestao" class="section">
   <div class="pm-toolbar">
-    <input class="pm-search" type="text" id="pm-search" placeholder="Pesquisar actividade..." oninput="renderPMTable()">
+    <input class="pm-search" type="text" id="pm-search" placeholder="Pesquisar actividade..." oninput="dRenderPMTable()">
     <div style="display:flex;gap:6px">
       <button class="chip active" id="pm-lvl-all" onclick="setPmLevel(0,this)">Todos</button>
       <button class="chip" id="pm-lvl-1" onclick="setPmLevel(1,this)">N1</button>
@@ -718,16 +719,15 @@ tr.hover-row:hover td{background:var(--bg2)}
     <div class="pm-table-wrap">
       <table class="pm-table" id="pm-table">
         <thead><tr>
-          <th style="min-width:240px">Designação</th>
-          <th style="text-align:center;width:50px">Nível</th>
-          <th style="text-align:center;width:65px">% Exec.</th>
-          <th style="text-align:center;width:85px">Início</th>
-          <th style="text-align:center;width:85px">Fim</th>
-          <th style="text-align:center;width:85px">Início Rev.</th>
-          <th style="text-align:center;width:85px">Fim Rev.</th>
-          <th style="width:80px">Owner</th>
-          <th style="width:80px">Sponsor</th>
-    
+          <th scope="col" style="min-width:240px">Designação</th>
+          <th scope="col" style="text-align:center;width:50px">Nível</th>
+          <th scope="col" style="text-align:center;width:65px">% Exec.</th>
+          <th scope="col" style="text-align:center;width:85px">Início</th>
+          <th scope="col" style="text-align:center;width:85px">Fim</th>
+          <th scope="col" style="text-align:center;width:85px">Início Rev.</th>
+          <th scope="col" style="text-align:center;width:85px">Fim Rev.</th>
+          <th scope="col" style="width:80px">Owner</th>
+          <th scope="col" style="width:80px">Sponsor</th>
         </tr></thead>
         <tbody id="pm-tbody"></tbody>
       </table>
@@ -951,6 +951,7 @@ tr.hover-row:hover td{background:var(--bg2)}
         <button class="chip gfin-view-btn" data-v="contratos">Contratos</button>
         <button class="chip gfin-view-btn" data-v="facturas">Facturas</button>
       </div>
+      <button class="btn" style="font-size:12px" onclick="exportGFin()">&#8595; Exportar Excel</button>
       <button class="btn" style="font-size:12px;background:var(--navy);color:#fff;border-color:var(--navy)" onclick="saveGFin()">&#128190; Guardar</button>
     </div>
   </div>
@@ -1153,9 +1154,17 @@ tr.hover-row:hover td{background:var(--bg2)}
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- TODO(SRI): preencher integrity com o hash correcto.
+     Comando: curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
+     Ou visitar: https://cdnjs.com/libraries/Chart.js/4.4.1 e https://cdnjs.com/libraries/xlsx/0.18.5 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+        crossorigin="anonymous"></script>
 <script>
+// ── DEBOUNCE UTILITY ──────────────────────────────────────────────────────────
+function debounce(fn,ms){let t;return function(){clearTimeout(t);t=setTimeout(fn,ms);};}
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
 let ALL_ACT=[];
 
@@ -1251,11 +1260,7 @@ function adjustSpacer(){
 }
 window.addEventListener('resize',adjustSpacer);
 window.addEventListener('load',adjustSpacer);
-document.addEventListener('DOMContentLoaded',function(){
-  adjustSpacer();
-  setTimeout(adjustSpacer,100);
-  setTimeout(adjustSpacer,500);
-});
+document.addEventListener('DOMContentLoaded',adjustSpacer);
 // Use ResizeObserver for dynamic height changes
 if(typeof ResizeObserver!=='undefined'){
   const ftEl=document.querySelector('.fixed-top');
@@ -1271,12 +1276,13 @@ function buildMs(id,vals){
   [...cur].forEach(v=>{if(!vals.includes(v))cur.delete(v);});
   dd.innerHTML='';
   // For N1 filter: show N0 group separators
+  // Pre-build Map to avoid O(n²) lookup inside forEach
+  const n1ToN0 = id==='n1' ? new Map(ALL_ACT.map(function(d){return [d.n1, d.n0||''];})) : null;
   let lastN0 = null;
   vals.forEach(function(v){
     if(id==='n1'){
       // Find which N0 this N1 belongs to
-      const entry = ALL_ACT.find(function(d){return d.n1===v;});
-      const n0 = entry ? (entry.n0||'') : '';
+      const n0 = n1ToN0.get(v) || '';
       const n0s = MS_STATE['n0']||new Set();
       if(n0 && n0!==lastN0 && (!n0s.size || n0s.size>1)){
         // Add N0 separator
@@ -1294,7 +1300,7 @@ function buildMs(id,vals){
       updateMsLabel(id);
       if(id==='n0'){cascadeN1();}
       else if(id==='n1'){cascadeN2();}
-      applyFilters();
+      dApplyFilters();
     });
     const sp=document.createElement('span');sp.textContent=v;
     if(id==='n1') sp.style.paddingLeft='4px';
@@ -1309,15 +1315,15 @@ function buildMs(id,vals){
 function toggleMsVal(id,val,cb){
   if(cb.checked)MS_STATE[id].add(val);else MS_STATE[id].delete(val);
   updateMsLabel(id);
-  if(id==='n1'){cascadeN2();} 
-  applyFilters();
+  if(id==='n1'){cascadeN2();}
+  dApplyFilters();
 }
 function clearMs(id){
   MS_STATE[id]=new Set();
   const vals=[...document.querySelectorAll('#ms-'+id+' .ms-option span')].map(s=>s.textContent);
   buildMs(id,vals);
   if(id==='n1')cascadeN2();
-  applyFilters();
+  dApplyFilters();
 }
 function updateMsLabel(id){
   const s=MS_STATE[id],lbl=document.getElementById('ms-'+id+'-lbl');
@@ -1340,18 +1346,6 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('.ms-wrap') && !e.target.closest('.ms-dropdown'))
     document.querySelectorAll('.ms-dropdown').forEach(d=>d.classList.remove('open'));
 });
-
-function cascadeN1(){
-  // When N0 changes, filter available N1s
-  const n0s=MS_STATE['n0'];
-  let base=ALL_ACT;
-  if(n0s&&n0s.size>0) base=base.filter(function(d){return n0s.has(d.n0||'');});
-  // Remove any N1 selections that no longer apply
-  const validN1s=new Set(base.map(function(d){return d.n1;}));
-  if(MS_STATE['n1']) [...MS_STATE['n1']].forEach(function(v){if(!validN1s.has(v))MS_STATE['n1'].delete(v);});
-  buildMs('n1', sortByHierarchy([...new Set(base.map(function(d){return d.n1;}))], base, 'n1', 'id1'));
-  cascadeN2();
-}
 
 function cascadeN1(){
   // When N0 changes, filter N1 and N2 options accordingly
@@ -1487,8 +1481,8 @@ function getSnapPrev(snap){
   const n0s = MS_STATE['n0']||new Set();
   const n1s = MS_STATE['n1']||new Set();
   const n2s = MS_STATE['n2']||new Set();
-  // Don't show delta when a single N2 (project) is selected — no comparable history
-  if(n2s.size>=1) return null;
+  // Don't show delta when N1 or N2 selected — snapshots only have N0 granularity
+  if(n2s.size>=1 || n1s.size>=1) return null;
   // Use per-N0 snapshot when single program selected
   if(n0s.size===1){
     const n0 = [...n0s][0];
@@ -1958,7 +1952,7 @@ function renderGantt(data){
     <th rowspan="2" style="text-align:center;width:72px">Fim</th>
     <th rowspan="2" style="text-align:center;width:76px">Estado</th>
     <th colspan="${validMths.length}" style="text-align:center">Timeline</th></tr><tr>`;
-  validMths.forEach((mo,i)=>{html+=`<th class="gantt-month-hdr" style="width:${validMw[i].toFixed(1)}%">${String(mo.m+1).padStart(2,"0")}/${String(mo.y).slice(2)}{mo.y}</span></th>`;});
+  validMths.forEach((mo,i)=>{html+=`<th class="gantt-month-hdr" style="width:${validMw[i].toFixed(1)}%">${String(mo.m+1).padStart(2,"0")}/${String(mo.y).slice(2)}</th>`;});
   html+=`</tr></thead><tbody>`;
 
   const barColor=(r)=>{
@@ -1967,6 +1961,28 @@ function renderGantt(data){
     if(r.status==='Em dia')return green;
     return redBar;
   };
+
+  // Pre-compute aggregate status for parent rows from N4 children
+  function aggregateStatus(arr){
+    if(!arr||!arr.length) return '';
+    if(arr.every(function(s){return s==='Concluído';})) return 'Concluído';
+    if(arr.some(function(s){return s==='Em atraso';})) return 'Em atraso';
+    return 'Em dia';
+  }
+  const parentStatus={};
+  data.forEach(function(row,idx){
+    if(row.nivel!==4||!row.status) return;
+    data.forEach(function(par,pi){
+      if(par.nivel>=4) return;
+      const n=par.nivel;
+      if(n>=1&&par.n1!==row.n1) return;
+      if(n>=2&&par.n2!==row.n2) return;
+      if(n>=3&&par.n3!==row.n3) return;
+      if(n===0&&par.n0&&row.n0&&par.n0!==row.n0) return;
+      if(!parentStatus[pi]) parentStatus[pi]=[];
+      parentStatus[pi].push(row.status);
+    });
+  });
 
   data.forEach((row,idx)=>{
     if(!gIsVisible(data,idx))return;
@@ -1977,10 +1993,12 @@ function renderGantt(data){
     const col=GCOL[idx];
     const toggle=canT?`<button class="g-toggle" onclick="gToggle(${idx})">${col?'▶':'▼'}</button> `:'  ';
 
-    const s=SC[row.status];
-    const statCell=row.status?`<span class="badge" style="background:${s.bg};color:${s.tc};font-size:10px">${row.status}</span>`:'—';
+    const rowSt=row.nivel===4?row.status:aggregateStatus(parentStatus[idx]);
+    const s=SC[rowSt];
+    const statCell=rowSt?`<span class="badge" style="background:${s.bg};color:${s.tc};font-size:10px">${rowSt}</span>`:'—';
     const startD=row.rs||row.bs,endD=row.rf||row.bf;
-    const dd=d=>d?d.substring(5).replace('-','/'):'—';
+    // Formato MM/AA (mês/ano abreviado)
+    const dd=d=>{if(!d)return'—';const p=d.split('-');return p[1]+'/'+p[0].slice(2);};
 
     // Base dates (planning) and Real dates (actual) - use real when available
     const bl=ganttPct(row.bs,row.bf,rStart,rMs);          // baseline
@@ -2021,37 +2039,16 @@ const PDS_SEC=[
 ];
 function isNA(v){return !v||v.trim()==='N/A'||v.trim()==='';}
 
-function pdsNavigate(dir){
-  const sel=document.getElementById('pds-selector');
-  if(!sel) return;
-  const opts=[...sel.options].filter(function(o){return o.value!='';});
-  if(!opts.length) return;
-  const cur=opts.findIndex(function(o){return o.value===sel.value;});
-  const next=Math.max(0,Math.min(opts.length-1, (cur<0?0:cur)+dir));
-  sel.value=opts[next].value;
-  pdsCurrentKey=sel.value;
-  renderPDS();
-}
-
 function buildPdsSelector(){
   const sel=document.getElementById('pds-selector');
   if(!sel) return;
-  // Always show ALL_PDS but filter by active n0/n1 selections
-  const n0s=MS_STATE['n0']||new Set();
-  const n1s=MS_STATE['n1']||new Set();
-  const n2s=MS_STATE['n2']||new Set();
-  const src=ALL_PDS.filter(function(p){
-    if(n0s.size&&!n0s.has(p.n0||'')) return false;
-    if(n1s.size&&!n1s.has(p.n1)) return false;
-    if(n2s.size&&!n2s.has(p.plano.trim())) return false;
-    return true;
-  });
+  // Use fPDS which is already filtered correctly by applyFilters() (n0/n1/n2/owner/sponsor)
   sel.innerHTML='<option value="">— seleccionar plano —</option>'+
-    src.map(function(p,si){
+    fPDS.map(function(p,si){
       // Store id0_id2 composite key as value — stable across re-imports
       const key=(p.id0||'')+'_'+p.id2;
-      const prefix=(p.n0?p.n0+' › ':'')+p.n1+' › ';
-      return '<option value="'+key+'">'+prefix+p.plano+'</option>';
+      const prefix=(p.n0?esc(p.n0)+' › ':'')+esc(p.n1)+' › ';
+      return '<option value="'+esc(key)+'">'+prefix+esc(p.plano)+'</option>';
     }).join('');
   // Restore previous selection if still valid
   if(pdsCurrentKey){
@@ -2061,9 +2058,14 @@ function buildPdsSelector(){
 }
 
 function pdsNav(dir){
-  if(!ALL_PDS.length) return;
-  pdsIdx=((pdsIdx+dir)+ALL_PDS.length)%ALL_PDS.length;
-  document.getElementById('pds-selector').value=pdsIdx;
+  const sel=document.getElementById('pds-selector');
+  if(!sel) return;
+  const opts=[...sel.options].filter(function(o){return o.value!=='';});
+  if(!opts.length) return;
+  const cur=opts.findIndex(function(o){return o.value===sel.value;});
+  const next=Math.max(0,Math.min(opts.length-1,(cur<0?0:cur)+dir));
+  sel.value=opts[next].value;
+  pdsCurrentKey=sel.value;
   renderPDS();
 }
 
@@ -2141,10 +2143,10 @@ function renderPDS(){
           +'<th style="text-align:center;padding:5px 6px;border-bottom:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:500">Estado</th>'
           +'</tr></thead><tbody>'+rows+'</tbody></table>';
       } else {
-        body=items.map(function(it){ return '<div style="padding:4px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5">'+esc(it.text)+'</div>'; }).join('');
+        body=items.map(function(it){ return '<div style="padding:4px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5">'+mdToHtml(it.text)+'</div>'; }).join('');
       }
     } else {
-      body=isNA(p[s.key])?'<div style="color:var(--text3);font-style:italic;font-size:13px">N/A</div>':'<div style="font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-line">'+esc(p[s.key]||'')+'</div>';
+      body=isNA(p[s.key])?'<div style="color:var(--text3);font-style:italic;font-size:13px">N/A</div>':'<div style="font-size:13px;color:var(--text2);line-height:1.7">'+mdToHtml(p[s.key]||'')+'</div>';
     }
     return '<div class="card" style="margin-bottom:0">'
       +'<div class="card-title" style="margin-bottom:.75rem"><span style="display:inline-block;width:3px;height:13px;background:'+s.color+';border-radius:2px;margin-right:6px;vertical-align:middle;border:none"></span><span style="color:'+s.color+'">'+s.label+'</span></div>'
@@ -2242,6 +2244,8 @@ function switchTab(id,btn){
       });
     }
   }
+  if(id==='exec-fin'){ initExecFin(); renderExecFin(); }
+  if(id==='gestao-financeira'){ initGFin(); }
   if(id==='gestao'){initPM();}
   if(id==='gestao-pds'){
     ensurePDSItems && ensurePDSItems();
@@ -2656,7 +2660,7 @@ function handleFile(input){
           else if(!prog.finAnos||!prog.finAnos.length) prog.finAnos=[new Date().getFullYear(),new Date().getFullYear()+1];
         });
         saveCfg();
-        log('Anos detectados: '+JSON.stringify(anosByN0));
+        log('Anos detectados: '+Object.entries(anosByN0).map(function(e){return e[0]+': ['+Array.from(e[1]).join(',')+']';}).join('; '));
       }      ALL_ACT=[...pAct];ALL_GANTT=[...pGantt];ALL_PDS=pPDS;
       // Persist data to localStorage so it survives navigation
       try{
@@ -2668,7 +2672,6 @@ function handleFile(input){
       Object.keys(GCOL).forEach(k=>delete GCOL[k]);
       Object.keys(ACOL).forEach(k=>delete ACOL[k]);
       ['n0','n1','n2','owner','sponsor'].forEach(id=>{MS_STATE[id]=new Set();});
-  buildAllFilters(ALL_ACT);  // Rebuild all filters to full list
       pmDirty=false;
       if(document.getElementById('pm-unsaved')) document.getElementById('pm-unsaved').classList.remove('show');
       buildAllFilters(ALL_ACT);
@@ -2683,9 +2686,10 @@ function handleFile(input){
       // Rebuild PDS/Risk selectors
       ensurePDSItems();
       if(document.getElementById('gpds-selector')) initGPDS();
-    if(document.getElementById('gfin-selector')) initGFin();
+      if(document.getElementById('gfin-selector')) initGFin();
       if(document.getElementById('grisk-selector')) initGRisk();
       if(document.getElementById('pds-selector')) buildPdsSelector();
+      if(document.getElementById('ef-plano')){ initExecFin(); renderExecFin(); }
       const totalContratos=pPDS.reduce(function(s,p){return s+(p.finances&&p.finances.contratos?p.finances.contratos.length:0);},0);
       const totalFact=pPDS.reduce(function(s,p){return s+(p.finances&&p.finances.facturas?p.finances.facturas.length:0);},0);
       const totalRub=pPDS.reduce(function(s,p){return s+(p.finances&&p.finances.rubricas?p.finances.rubricas.length:0);},0);
@@ -2839,7 +2843,6 @@ async function loadData(){
     }catch(e){ continue; }
   }
   if(!loaded) console.warn('PMO: JSON not found, use Excel upload');
-  buildAllFilters(ALL_ACT);
   ['n0','n1','n2','owner','sponsor'].forEach(id=>{MS_STATE[id]=new Set();});
   buildAllFilters(ALL_ACT);  // Rebuild all filters to full list
   applyFilters();
@@ -2849,6 +2852,7 @@ async function loadData(){
     if(document.getElementById('gfin-selector')) initGFin();
     if(document.getElementById('grisk-selector')) initGRisk();
     if(document.getElementById('pds-selector')) buildPdsSelector();
+    if(document.getElementById('ef-plano')){ initExecFin(); renderExecFin(); }
   }, 100);
   // Store program/eixo list for Admin page
   try{
@@ -2903,7 +2907,7 @@ function saveSnapshot(){
 
 function buildSnapSelector(){
   const snaps = getSnapshots();
-  const opts = snaps.map((s,i)=>'<option value="'+i+'">'+s.label+'</option>').join('');
+  const opts = snaps.map((s,i)=>'<option value="'+i+'">'+esc(s.label)+'</option>').join('');
   const selB = document.getElementById('snap-selector');
   if(selB) selB.innerHTML='<option value="">— seleccionar —</option>'+opts;
   const selA = document.getElementById('snap-selector-a');
@@ -2917,7 +2921,7 @@ function renderSnapHistory(){
   if(!snaps.length){ el.innerHTML='<div style="color:var(--text3);font-size:12px">Sem snapshots guardados.</div>'; return; }
   el.innerHTML = snaps.map((s,i) => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
-      <span style="font-size:12px">${s.label} &nbsp;<span style="color:var(--text3);font-size:11px">(${s.kpi.n} act.)</span></span>
+      <span style="font-size:12px">${esc(s.label)} &nbsp;<span style="color:var(--text3);font-size:11px">(${s.kpi.n} act.)</span></span>
       <button onclick="deleteSnapshot(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px">&#10005;</button>
     </div>`).join('');
 }
@@ -3607,6 +3611,9 @@ function populateHierarchyFromRow(r){
   document.getElementById('pf-id2').value = r.id2||'';
 }
 
+// Debounced versions — evita re-renders em cascata durante interacção rápida
+const dApplyFilters = debounce(applyFilters, 120);
+const dRenderPMTable = debounce(renderPMTable, 150);
 
 // ── GESTÃO PDS ────────────────────────────────────────────────────────────────
 // PDS data structure extended with structured items (arrays with text+date+status)
@@ -3682,8 +3689,8 @@ function initGPDS(){
     ALL_PDS.map(function(p){
       const key=(p.id0||'')+'_'+p.id2;
       const prefix = (p.n0 ? esc(p.n0)+' › ' : '') + (p.n1 ? esc(p.n1)+' › ' : '');
-      return '<option value="'+key+'">'+prefix+esc(p.plano)+'</option>';
-    }).join('');;
+      return '<option value="'+esc(key)+'">'+prefix+esc(p.plano)+'</option>';
+    }).join('');
 }
 
 function loadGPDS(){
@@ -3793,10 +3800,12 @@ function markGPDSDirty(){
   document.getElementById('gpds-unsaved').classList.add('show');
   // Sync on every change so PDS menu always shows latest
   syncPDSLegacyText();
-  // Rebuild fPDS
+  // Rebuild fPDS (same logic as applyFilters)
+  const n0s=MS_STATE['n0']||new Set();
   const n1s=MS_STATE['n1']||new Set();
-  const activeId2s=(MS_STATE['n2']&&MS_STATE['n2'].size>0)?new Set(fAct.map(function(d){return d.id2;})):null;
+  const activeId2s=(MS_STATE['n2']&&MS_STATE['n2'].size>0)?new Set(fAct.map(function(d){return d.id0+'_'+d.id2;})):null;
   fPDS=ALL_PDS.filter(function(p){
+    if(n0s.size&&!n0s.has(p.n0||''))return false;
     if(n1s.size&&!n1s.has(p.n1))return false;
     if(activeId2s&&!activeId2s.has((p.id0||'')+'_'+p.id2))return false;
     return true;
@@ -3834,11 +3843,13 @@ function gpdsInsertFmt(btn, key, idx, marker){
 
 function saveGPDS(){
   syncPDSLegacyText();
-  // Rebuild fPDS from updated ALL_PDS (respecting active filters)
+  // Rebuild fPDS from updated ALL_PDS (same logic as applyFilters)
+  const n0s=MS_STATE['n0']||new Set();
   const n1s=MS_STATE['n1']||new Set();
   const n2s=MS_STATE['n2']||new Set();
-  const activeId2s = n2s.size>0 ? new Set(fAct.map(d=>d.id2)) : null;
+  const activeId2s = n2s.size>0 ? new Set(fAct.map(d=>d.id0+'_'+d.id2)) : null;
   fPDS=ALL_PDS.filter(p=>{
+    if(n0s.size && !n0s.has(p.n0||'')) return false;
     if(n1s.size && !n1s.has(p.n1)) return false;
     if(activeId2s && !activeId2s.has((p.id0||'')+'_'+p.id2)) return false;
     return true;
@@ -3893,8 +3904,8 @@ function initGRisk(){
     ALL_PDS.map(function(p){
       const key=(p.id0||'')+'_'+p.id2;
       const prefix = (p.n0 ? esc(p.n0)+' › ' : '') + (p.n1 ? esc(p.n1)+' › ' : '');
-      return '<option value="'+key+'">'+prefix+esc(p.plano)+'</option>';
-    }).join('');;
+      return '<option value="'+esc(key)+'">'+prefix+esc(p.plano)+'</option>';
+    }).join('');
 }
 
 function getCurrentRiskPDS(){
@@ -4707,8 +4718,8 @@ function initGFin(){
   sel.innerHTML='<option value="">— seleccionar plano —</option>'+
     ALL_PDS.map(function(p){
       const key=(p.id0||'')+'_'+p.id2;
-      const prefix=(p.n0?p.n0+' › ':'')+p.n1+' › ';
-      return '<option value="'+key+'">'+prefix+p.plano+'</option>';
+      const prefix=(p.n0?esc(p.n0)+' › ':'')+esc(p.n1)+' › ';
+      return '<option value="'+esc(key)+'">'+prefix+esc(p.plano)+'</option>';
     }).join('');
   const sec=document.getElementById('gestao-financeira');
   if(!sec._finDelegate){
@@ -4870,7 +4881,7 @@ function renderOrcamento(p){
     });
 
     html+='<tr style="background:var(--bg2);font-weight:700">'
-      +'<td>Total</td><td></td>'
+      +'<td>Total</td><td></td><td></td>'
       +anos.map(function(a){return '<td style="text-align:right">'+fmtEur(anoTotals[a])+'</td>';}).join('')
       +'<td style="text-align:right;color:var(--navy)">'+fmtEur(grandTotal)+'</td>'
       +'<td colspan="3"></td></tr>';
@@ -4937,8 +4948,8 @@ function renderContratos(p){
       const moedaOpts=MOEDAS.map(function(m){
         return '<option value="'+m+'"'+(ct.moeda===m?' selected':'')+'>'+m+'</option>';
       }).join('');
-      // Invoice total for this contract
-      const facTotal=(f.facturas||[]).filter(function(fac){return fac.contrato_id===ct.id;})
+      // Invoice total for this contract (exclude cancelled invoices)
+      const facTotal=(f.facturas||[]).filter(function(fac){return fac.contrato_id===ct.id&&fac.estado!=='Cancelada';})
         .reduce(function(s,fac){return s+parseNum(fac.valor);},0);
       const disponivel=parseNum(ct.valor_total)-facTotal;
 
@@ -4966,8 +4977,8 @@ function renderContratos(p){
         +'<div><div class="fin-section-title" style="margin:0 0 3px">Data adjudicação</div>'
         +'<input type="date" class="fin-input" style="text-align:left" data-ci="'+ci+'" data-field="data_adj" value="'+(ct.data_adj||'')+'"></div>'
         +(ct.moeda!==getBaseMoeda()
-          ? '<div><div class="fin-section-title" style="margin:0 0 3px">Câmbio provisório <span style="color:var(--text3);font-weight:400">('+ct.moeda+' → '+getBaseMoeda()+')</span></div>'
-            +'<input class="fin-input" data-ci="'+ci+'" data-field="cambio_ref" placeholder="Ex: 920.50" value="'+(ct.cambio_ref||'')+'"></div>'
+          ? '<div style="grid-column:1/-1"><div class="fin-section-title" style="margin:0 0 3px">Câmbio provisório <span style="color:var(--text3);font-weight:400">('+ct.moeda+' → '+getBaseMoeda()+')</span></div>'
+            +'<input class="fin-input" style="max-width:200px" data-ci="'+ci+'" data-field="cambio_ref" placeholder="Ex: 920.50" value="'+(ct.cambio_ref||'')+'"></div>'
           : '')
         +'</div>'
         // Summary
@@ -5110,10 +5121,12 @@ function renderFacturas(p){
 function validateFacValor(p,fi){
   const fac=p.finances.facturas[fi]; if(!fac||!fac.contrato_id) return;
   const ct=p.finances.contratos.find(function(c){return c.id===fac.contrato_id;}); if(!ct) return;
-  const totalFac=p.finances.facturas.filter(function(f,i){return f.contrato_id===ct.id&&f.estado!=='Cancelada';})
-    .reduce(function(s,f){return s+parseNum(f.valor);},0);
-  if(totalFac>parseNum(ct.valor_total)){
-    showToast('Atenção: total das facturas ('+fmtEur(totalFac,ct.moeda)+') supera o valor do contrato ('+fmtEur(ct.valor_total,ct.moeda)+').','amber',4000);
+  // Convert all invoice values to base moeda for a consistent cross-currency comparison
+  const totalFacBase=p.finances.facturas.filter(function(f){return f.contrato_id===ct.id&&f.estado!=='Cancelada';})
+    .reduce(function(s,f){return s+toBase(parseNum(f.valor),f.moeda||ct.moeda,f.cambio||ct.cambio_ref);},0);
+  const ctBase=toBase(parseNum(ct.valor_total),ct.moeda,ct.cambio_ref);
+  if(totalFacBase>ctBase){
+    showToast('Atenção: total das facturas ('+fmtEur(totalFacBase)+') supera o valor do contrato ('+fmtEur(ctBase)+').','amber',4000);
   }
 }
 
@@ -5138,9 +5151,51 @@ function saveGFin(){
   }catch(e){}
   showToast('Informação financeira guardada.','navy');
   // Refresh EF if visible
-  if(document.getElementById('exec-fin')&&document.getElementById('exec-fin').style.display!=='none'){
-    renderExecFin();
+  if(document.getElementById('exec-fin')?.classList.contains('active')){
+    initExecFin(); renderExecFin();
   }
+}
+
+function exportGFin(){
+  if(typeof XLSX==='undefined'){alert('XLSX não carregado.');return;}
+  const p=getCurrentFinPDS();
+  if(!p){showToast('Selecciona um plano de acção primeiro.','amber');return;}
+  const f=p.finances||{};
+  const wb=XLSX.utils.book_new();
+
+  // Sheet 1: Orçamento
+  const orcHeader=['ID0','ID2','Categoria','Tipo','Moeda'];
+  const anos=new Set();
+  (f.rubricas||[]).forEach(function(r){ Object.keys(r.valores||{}).forEach(function(a){anos.add(a);}); });
+  const anosList=Array.from(anos).sort();
+  orcHeader.push(...anosList,'Total','Nota','Fonte');
+  const orcRows=[orcHeader];
+  (f.rubricas||[]).forEach(function(r){
+    const rowTotal=anosList.reduce(function(s,a){return s+(r.valores&&r.valores[a]?parseNum(r.valores[a]):0);},0);
+    orcRows.push([p.id0||'',p.id2,r.categoria||'',r.capex?'CAPEX':'OPEX',r.moeda||'']
+      .concat(anosList.map(function(a){return r.valores&&r.valores[a]!=null?parseNum(r.valores[a]):0;}))
+      .concat([rowTotal,r.nota||'',r.fonte||'']));
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(orcRows),'Orçamento');
+
+  // Sheet 2: Contratos (with Câmbio Provisório)
+  const ctRows=[['ID0','ID2','Fornecedor','Tipologia','Moeda','Câmbio Provisório','Valor','Data Adjudicação','Descrição']];
+  (f.contratos||[]).forEach(function(ct){
+    ctRows.push([p.id0||'',p.id2,ct.fornecedor||'',ct.categoria||'',ct.moeda||'',ct.cambio_ref||'',ct.valor_total||0,ct.data_adj||'',ct.descricao||'']);
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ctRows),'Contratos');
+
+  // Sheet 3: Facturas
+  const facRows=[['ID0','ID2','Fornecedor','Contrato','Moeda','Câmbio','Valor','Data Emissão','Data Vencimento','Estado']];
+  (f.facturas||[]).forEach(function(fac){
+    const ct=(f.contratos||[]).find(function(c){return c.id===fac.contrato_id;})||{};
+    facRows.push([p.id0||'',p.id2,fac.fornecedor||ct.fornecedor||'',ct.fornecedor||'',fac.moeda||'',fac.cambio||'',fac.valor||0,fac.data_emissao||'',fac.data_vencimento||'',fac.estado||'']);
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(facRows),'Facturas');
+
+  const safeName=(p.plano||'financeiro').replace(/[\\/:*?"<>|]/g,'_').substring(0,50);
+  XLSX.writeFile(wb,'GFin_'+safeName+'.xlsx');
+  showToast('Excel financeiro exportado.','green');
 }
 
 
@@ -5201,8 +5256,8 @@ function initExecFin(){
     ALL_PDS.filter(function(p){ return p.finances && (p.finances.rubricas&&p.finances.rubricas.length || p.finances.contratos&&p.finances.contratos.length); })
     .map(function(p){
       const key = (p.id0||'')+'_'+p.id2;
-      const prefix = (p.n0?p.n0+' › ':'')+p.n1+' › ';
-      return '<option value="'+key+'">'+prefix+p.plano+'</option>';
+      const prefix = (p.n0?esc(p.n0)+' › ':'')+esc(p.n1)+' › ';
+      return '<option value="'+esc(key)+'">'+prefix+esc(p.plano)+'</option>';
     }).join('');
   selP.value = curP;
 
